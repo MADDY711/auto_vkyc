@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VKYC & OCR</title>
+</head>
+<body>
+  <h2>Webcam Feed</h2>
+  <video id="video" width="480" height="360" autoplay></video>
+  <canvas id="canvas" style="display:none;"></canvas>
+  <br><br>
+  <button onclick="capture('selfie')">📸 Capture Selfie</button>
+  <button onclick="capture('document')">📄 Capture Document</button>
+
+  <script>
+    const video = document.getElementById('video');
+
+    // Access webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { video.srcObject = stream; });
+
+    function capture(type) {
+      const canvas = document.getElementById('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = canvas.toDataURL('image/png');
+
+      fetch(`/capture_${type}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+      })
+      .then(res => res.json())
+      .then(data => alert(JSON.stringify(data)))
+      .catch(err => console.error('Error:', err));
+    }
+  </script>
+</body>
+</html>

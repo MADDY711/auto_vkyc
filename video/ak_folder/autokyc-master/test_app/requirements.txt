@@ -1,0 +1,24 @@
+# Core
+numpy
+opencv-python
+Pillow
+torch
+torchvision
+
+
+# Face recognition / feature extraction (e.g., MobileFaceNet)
+MobileFaceNet
+scikit-learn
+imutils
+
+matplotlib
+scipy
+tqdm
+opencv-python
+pillow
+torch
+torchvision
+numpy
+scikit-image
+torchsummary
+imgaug

@@ -1,5 +1,7 @@
 import cv2
 
+'''chal beta selfie lele'''
+
 def capture_selfie():
     # Start the default webcam
     cap = cv2.VideoCapture(0)

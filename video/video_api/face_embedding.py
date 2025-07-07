@@ -19,7 +19,7 @@ model = MobileFaceNet()
 model.eval()
 
 # Inference
-img = preprocess("F:\\clg\\internships\\clg_internship\\auto_vkyc\\sample_img.jpg")  # Replace with your image path
+img = preprocess("F:\\clg\\internships\\clg_internship\\auto_vkyc\\video\\selfie.jpg")  # Replace with your image path
 with torch.no_grad():
     embedding = model(img)
     print("Face embedding:", embedding.numpy())

@@ -10,7 +10,7 @@ model = MobileFaceNet()
 model = torch.jit.load("F:\\clg\\internships\\clg_internship\\auto_vkyc\\video\\video_api\\mobilefacenet_scripted.pt")
 model.eval()
 
-
+"""image taken from database"""
 # --- 2. Preprocess function ---
 def preprocess(image_path):
     img = Image.open(image_path).convert('RGB')
@@ -21,6 +21,7 @@ def preprocess(image_path):
     ])
     return transform(img).unsqueeze(0)  # Add batch dimension
 
+'''selfie capturing'''
 # --- 3. Capture selfie and save as file ---
 def capture_selfie():
     cap = cv2.VideoCapture(0)
@@ -50,12 +51,16 @@ def capture_selfie():
     cv2.destroyAllWindows()
     return "selfie.jpg"
 
+
+'''cosine similarity function'''
 # --- 4. Similarity function ---
 def cosine_similarity(emb1, emb2):
     emb1 = emb1 / torch.norm(emb1)
     emb2 = emb2 / torch.norm(emb2)
     return torch.sum(emb1 * emb2).item()
 
+
+'''embeddings extraction and comparison'''
 # --- 5. Main flow ---
 if __name__ == "__main__":
     # Get embedding of existing image

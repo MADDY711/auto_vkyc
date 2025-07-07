@@ -1,0 +1,6 @@
+venv/ 
+test_app/test_app/venv/
+*.pyd
+*.dll
+*.lib
+__pycache__/

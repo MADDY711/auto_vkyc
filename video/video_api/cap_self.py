@@ -1,46 +1,57 @@
 import cv2
+import time
+import os
 
-'''chal beta selfie lele'''
-
-def capture_selfie():
-    # Start the default webcam
+def capture_selfie_and_video(save_img="selfie.jpg", save_video="selfie_video.avi", duration=10):
+    # Start webcam
     cap = cv2.VideoCapture(0)
-
-    # Check if the camera opened successfully
     if not cap.isOpened():
         print(" Cannot access the webcam")
         return
 
-    print(" Webcam is on. Press 's' to take a selfie, or 'q' to quit.")
-
-    # Optional: Create a resizable window
-    cv2.namedWindow("Live Selfie", cv2.WINDOW_NORMAL)
+    print(" Webcam is on. Press 's' to take selfie and start video, or 'q' to quit.")
+    cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
 
     while True:
-        # Read one frame
         ret, frame = cap.read()
         if not ret:
             print(" Failed to read from webcam")
             break
 
-        # Show the video frame
-        cv2.imshow("Live Selfie", frame)
-
-        # Wait for key press
+        cv2.imshow("Live", frame)
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord('s'):
-            # Save the frame as an image
-            cv2.imwrite("selfie.jpg", frame)
-            print(" Selfie saved as 'selfie.jpg'")
-            break
-        elif key == ord('q'):
-            print(" Cancelled. No selfie taken.")
+            # === Save Selfie ===
+            cv2.imwrite(save_img, frame)
+            print(f" Selfie saved as '{save_img}'")
+
+            # === Start Recording Video ===
+            print(f" Recording {duration} second video...")
+
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            out = cv2.VideoWriter(save_video, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
+
+            start_time = time.time()
+            while time.time() - start_time < duration:
+                ret, frame = cap.read()
+                if not ret:
+                    print(" Frame dropped during video recording")
+                    break
+                out.write(frame)
+                cv2.imshow("Recording", frame)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    print(" Recording interrupted.")
+                    break
+
+            out.release()
+            print(f"Video saved as '{save_video}'")
             break
 
-    # Release resources
+        elif key == ord('q'):
+            print(" Cancelled. No selfie or video saved.")
+            break
+
     cap.release()
     cv2.destroyAllWindows()
-
-# Call the function
-capture_selfie()
+    return save_img, save_video

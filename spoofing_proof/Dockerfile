@@ -28,8 +28,8 @@ RUN pip install --no-cache-dir \
 WORKDIR /app
 COPY . /app
 
-RUN wget -nc http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2 && \
-    bzip2 -dk shape_predictor_68_face_landmarks.dat.bz2
+#RUN wget -nc http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2 && \
+#    bzip2 -dk shape_predictor_68_face_landmarks.dat.bz2
 
 # Run the script
 CMD ["python", "spoof_detection.py"]

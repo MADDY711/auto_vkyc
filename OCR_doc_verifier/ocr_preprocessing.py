@@ -46,7 +46,7 @@ def extract_text_from_image(image):
     return text
 
 if __name__ == "__main__":
-    image_path = "your_image_path_here.jpg"  # Replace with your document image path
+    image_path = "F:\\clg\\internships\\clg_internship\\auto_vkyc\\OCR_doc_verifier\\Untitled.jpg"  # Replace with your document image path
     preprocessed_image = preprocess_image(image_path, save_processed=True)
     extracted_text = extract_text_from_image(preprocessed_image)
     
